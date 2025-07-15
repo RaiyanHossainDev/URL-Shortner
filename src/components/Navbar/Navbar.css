@@ -1,0 +1,19 @@
+#nav{
+    @apply absolute w-full pt-[40px] px-[200px]
+}
+.navHolder{
+    @apply border-b-[2px] border-x-[1px] dark:border-x-[#0f172b] text-[white] p-[20px] rounded-[20px] hover:mt-[10px] 
+    transition-all duration-[.2s] dark:hover:border-x-[#fff] relative 
+}
+.navHolder:hover .hoveringLine {
+    @apply w-[230px] h-[2px]
+}
+.navHolder .hoveringLine{
+    @apply w-[100px] h-[1px] rounded-[10px] absolute top-[0] left-[50%] translate-x-[-50%] transition-all duration-[.23s]
+}
+.navbar .authBar {
+    @apply flex gap-[20px]
+}
+.navHolder .navbar {
+    @apply flex justify-between items-center
+}
