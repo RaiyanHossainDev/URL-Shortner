@@ -2,11 +2,13 @@ import React, { useEffect, useState } from 'react'
 import { FiCopy } from "react-icons/fi";
 import axios from 'axios';
 import { Bounce, toast } from 'react-toastify';
+import { useSelector } from 'react-redux';
 
 const ShortnerForm = () => {
   const [realUrl, setRealUrl] = useState('')
   const [data, setData] = useState([])
   const [checked, setChecked] = useState(localStorage.getItem("theme") === "dark")
+  const currentUser = useSelector(data => data.currentUser.value)
 
   const handleSendUrl = () => {
     if (realUrl === '') {
@@ -24,6 +26,7 @@ const ShortnerForm = () => {
     } else {
       axios.post('http://localhost:8000/url/urlShortner', {
         url: realUrl,
+        userId: currentUser?.user._id
       })
         .then(response => {
           setData(prev => [...prev, response.data])
@@ -141,7 +144,7 @@ const ShortnerForm = () => {
               <div className="flex justify-between items-center p-3 rounded-xl border border-slate-300 dark:border-slate-700 bg-slate-50 dark:bg-slate-800">
                 <div>
                   <span className="text-[13px] text-slate-500 dark:text-slate-400">{item.url}</span><br />
-                  <a href={item.shortenUrl} target={'_blank'} rel="noreferrer" className="font-semibold text-violet-600 dark:text-violet-400 hover:underline">{item.shortenUrl}</a>
+                  <a href={item.shortenUrl} target='_blank' className="font-semibold text-violet-600 dark:text-violet-400 hover:underline">{item.shortenUrl}</a>
                 </div>
                 <button onClick={() => copyToClipboard(item.shortenUrl)} title='Copy' className="hover:text-violet-600 dark:hover:text-violet-400 cursor-pointer"><FiCopy /></button>
               </div>

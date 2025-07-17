@@ -1,11 +1,14 @@
 import axios from 'axios'
 import React, { useState } from 'react'
 import { FaEnvelope, FaEye, FaEyeSlash, FaFacebookF, FaGoogle, FaUser } from 'react-icons/fa'
+import { useDispatch } from 'react-redux'
 import { Link, useNavigate } from 'react-router'
 import { Bounce, toast } from 'react-toastify'
+import { userData } from '../../slice/userSlice'
 
 const Login = () => {
     const navigator = useNavigate()
+    const dispatch = useDispatch()
     const [form,setForm] = useState({email:'',password:''})
     const [showPassword, setShowPassword] = useState(false);
 
@@ -39,8 +42,9 @@ const Login = () => {
                     theme: "light",
                     transition: Bounce,
                 });
+                localStorage.setItem("currentUser", JSON.stringify(res.data))
+                dispatch(userData(res.data))
                 navigator('/')
-                console.log(res.data);
                 
             }).catch(err=>{
                 toast.error(err.response.data , {
